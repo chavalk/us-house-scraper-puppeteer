@@ -18,7 +18,13 @@ const scrapeData = async () => {
 
         // let imgSource = imgReference.getAttribute('src');
 
-        return tableReference;
+        const table = Array.from(tableReference).map((item) => {
+            return {
+                text: item.innerText
+            }
+        });
+
+        return table;
     });
 
     browser.close();
