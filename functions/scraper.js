@@ -12,11 +12,7 @@ const scrapeData = async () => {
     });
 
     const body = await page.evaluate(() => {
-        // const imgReference = document.querySelector('#mp-otd #mp-otd-img img');
-        // const listReference = document.querySelectorAll('#mp-otd > ul li');
         const tableReference = document.querySelectorAll('#activity-table > tbody tr');
-
-        // let imgSource = imgReference.getAttribute('src');
 
         const table = Array.from(tableReference).map((item) => {
             return {
