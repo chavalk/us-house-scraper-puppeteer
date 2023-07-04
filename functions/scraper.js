@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 const scrapeData = async () => {
     const browser = await puppeteer.launch({
-        headless: false
+        headless: true
     });
 
     const page = await browser.newPage();
@@ -33,8 +33,6 @@ const scrapeData = async () => {
     return body;
 }
 
-scrapeData().then((res) => {
-    console.log(res);
-});
+scrapeData();
 
 exports.scrapeData = scrapeData;
