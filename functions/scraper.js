@@ -15,8 +15,13 @@ const scrapeData = async () => {
         const tableReference = document.querySelectorAll('#activity-table > tbody tr');
 
         const table = Array.from(tableReference).map((item) => {
+            const dataCellReference = item.querySelectorAll('td');
+            const dataCell = Array.from(dataCellReference)
+
             return {
-                text: item.innerText
+                floorTime: dataCell[0].innerText,
+                floorBill: dataCell[1].innerText,
+                floorActivity: dataCell[2].innerText
             }
         });
 
