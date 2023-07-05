@@ -33,8 +33,6 @@ const scrapeData = async () => {
     return body;
 }
 
-scrapeData().then((res) => {
-    console.log(res)
-});
+scrapeData();
 
 exports.scrapeData = scrapeData;
