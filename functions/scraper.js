@@ -12,9 +12,9 @@ const scrapeData = async () => {
     });
 
     const body = await page.evaluate(() => {
-        const tableReference = document.querySelectorAll('#activity-table > tbody tr');
+        const activityTableReference = document.querySelectorAll('#activity-table > tbody tr');
 
-        const table = Array.from(tableReference).map((item) => {
+        const activity = Array.from(activityTableReference).map((item) => {
             const dataCellReference = item.querySelectorAll('td');
             const dataCell = Array.from(dataCellReference)
 
@@ -25,7 +25,7 @@ const scrapeData = async () => {
             }
         });
 
-        return table;
+        return { activity };
     });
 
     browser.close();
@@ -33,6 +33,8 @@ const scrapeData = async () => {
     return body;
 }
 
-scrapeData();
+scrapeData().then((res) => {
+    console.log(res)
+});
 
 exports.scrapeData = scrapeData;
