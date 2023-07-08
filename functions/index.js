@@ -30,9 +30,11 @@ exports.pubsub = functions
     .onRun(async () => {
         try {
             const scrapeData = await scraper.scrapeData();
+            console.log("Scrape Data:", scrapeData);
             return db.collection('activity').doc(getToday()).set(scrapeData);
         } catch (error) {
-            throw new Error(error);
+            console.log('Error ocurred during function execution:', error);
+            return null;
         }
     })
 
