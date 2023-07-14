@@ -18,6 +18,7 @@ const db = admin.firestore();
 
 const getToday = () => {
     const today = new Date();
+    console.log(`${today.getDate()}${today.getMonth() + 1}${today.getFullYear()}`);
 
     return `${today.getDate()}${today.getMonth() + 1}${today.getFullYear()}`;
 };
