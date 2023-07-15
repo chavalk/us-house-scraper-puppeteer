@@ -17,7 +17,7 @@ const scrapeData = async () => {
     
             const activity = Array.from(activityTableReference).map((item) => {
                 const dataCellReference = item.querySelectorAll('td');
-                const dataCell = Array.from(dataCellReference)
+                const dataCell = Array.from(dataCellReference);
     
                 return {
                     floorTime: dataCell[0].innerText,
