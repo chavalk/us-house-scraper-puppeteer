@@ -8,7 +8,7 @@ const scrapeData = async () => {
     
         const page = await browser.newPage();
     
-        await page.goto('https://live.house.gov/', {
+        await page.goto('https://live.house.gov/?date=2023-07-27', {
             waitUntil: "networkidle0"
         });
     
