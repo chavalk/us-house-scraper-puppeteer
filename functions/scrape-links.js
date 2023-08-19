@@ -12,7 +12,23 @@ const scrapeData = async () => {
             waitUntil: "networkidle0"
         });
 
-        
+        const body = await page.evaluate(() => {
+            const activityTableReference = document.querySelectorAll('#activity-table > tbody tr td');
+
+            const activity = Array.from(activityTableReference).map((item) => {
+                const anchor = item.querySelector('a');
+                let href;
+                if (anchor !== null) {
+                    href = anchor.getAttribute('href');
+                }
+
+                return {
+                    link: href
+                }
+            });
+
+            return { activity };
+        })
     } catch (error) {
 
     }
