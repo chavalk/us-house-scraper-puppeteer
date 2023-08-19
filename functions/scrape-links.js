@@ -28,7 +28,11 @@ const scrapeData = async () => {
             });
 
             return { activity };
-        })
+        });
+
+        await browser.close();
+
+        return body;
     } catch (error) {
 
     }
