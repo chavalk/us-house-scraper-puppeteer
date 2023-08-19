@@ -5,7 +5,15 @@ const scrapeData = async () => {
         const browser = await puppeteer.launch({
             headless: "new"
         });
-    } catch (error) {
+
+        const page = await browser.newPage();
+
+        await page.goto('https://live.house.gov/?date=2023-07-27', {
+            waitUntil: "networkidle0"
+        });
+
         
+    } catch (error) {
+
     }
 }
