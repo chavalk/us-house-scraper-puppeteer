@@ -34,6 +34,7 @@ const scrapeData = async () => {
 
         return body;
     } catch (error) {
-
+        console.error('Error occurred during scraping', error);
+        return null;
     }
 }
