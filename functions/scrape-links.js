@@ -38,3 +38,9 @@ const scrapeData = async () => {
         return null;
     }
 }
+
+scrapeData().then((res) => {
+    console.log(res);
+});
+
+exports.scrapeData = scrapeData;
