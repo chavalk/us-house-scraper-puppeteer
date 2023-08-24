@@ -18,17 +18,11 @@ const scrapeData = async () => {
             const activity = Array.from(activityTableReference).map((item) => {
                 const dataCellReference = item.querySelectorAll('td');
                 const dataCell = Array.from(dataCellReference);
-                // const anchor = item.querySelector('a');
-                // let href;
-                // if (anchor !== null) {
-                //     href = anchor.getAttribute('href');
-                // }
     
                 return {
                     floorTime: dataCell[0].innerText,
                     floorBill: dataCell[1].innerText,
                     floorActivity: dataCell[2].innerText
-                    // link: href
                 }
             });
     
