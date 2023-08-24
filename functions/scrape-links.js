@@ -27,7 +27,9 @@ const scrapeData = async () => {
                 }
             });
 
-            return { activity };
+            const filteredActivity = activity.filter(value => JSON.stringify(value) !== '{}');
+
+            return { filteredActivity };
         });
 
         await browser.close();
