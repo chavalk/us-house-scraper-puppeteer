@@ -28,8 +28,9 @@ const scrapeData = async () => {
             });
 
             const filteredActivity = activity.filter(value => JSON.stringify(value) !== '{}');
+            const rollCallActivity = filteredActivity.filter(value => value.link.includes('roll'));
 
-            return { filteredActivity };
+            return { rollCallActivity };
         });
 
         await browser.close();
