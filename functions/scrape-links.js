@@ -30,12 +30,31 @@ const scrapeData = async () => {
             const filteredActivity = activity.filter(value => JSON.stringify(value) !== '{}');
             const rollCallActivity = filteredActivity.filter(value => value.link.includes('roll'));
 
-            return { rollCallActivity };
+            return rollCallActivity;
+        });
+
+        await page.goto(body[0].link, {
+            waitUntil: 'networkidle0'
+        });
+
+        const votes = await page.evaluate(() => {
+            const tablesReference = document.querySelectorAll('table');
+
+            const tables = Array.from(tablesReference).map((item) => {
+                const itemData = item.querySelectorAll('tbody tr td');
+                const itemDataArray = Array.from(itemData);
+
+                return {
+                    item: itemDataArray[0].innerText + itemDataArray[1].innerText + itemDataArray[2]?.innerText || ''
+                }
+            });
+
+            return tables;
         });
 
         await browser.close();
 
-        return body;
+        return votes;
     } catch (error) {
         console.error('Error occurred during scraping', error);
         return null;
