@@ -51,6 +51,8 @@ const scrapeData = async () => {
 
             tables.splice(0, 1);
             tables[0].item = tables[0].item.replaceAll('\n', ', ');
+            tables[1].item = tables[1].item.replaceAll('\n', ', ');
+            tables[2].item = tables[2].item.replaceAll('\n', ', ');
 
             return tables;
         });
