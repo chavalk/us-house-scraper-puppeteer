@@ -49,6 +49,8 @@ const scrapeData = async () => {
                 }
             });
 
+            tables.splice(0, 1);
+
             return tables;
         });
 
