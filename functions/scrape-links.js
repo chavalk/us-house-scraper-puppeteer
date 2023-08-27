@@ -50,6 +50,7 @@ const scrapeData = async () => {
             });
 
             tables.splice(0, 1);
+            tables[0].item = tables[0].item.replaceAll('\n', ', ');
 
             return tables;
         });
