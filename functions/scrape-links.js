@@ -1,5 +1,7 @@
+// Call Puppeteer
 const puppeteer = require('puppeteer');
 
+// Build scrapeData function
 const scrapeData = async () => {
     try {
         // Launch browser
