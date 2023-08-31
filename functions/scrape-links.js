@@ -4,25 +4,25 @@ const puppeteer = require('puppeteer');
 // Build scrapeData function
 const scrapeData = async () => {
     try {
-        // Launch browser
+        // Launch Puppeteer browser
         const browser = await puppeteer.launch({
             headless: "new"
         });
 
-        // Open new page in browser
+        // Open new page in Puppeteer browser
         const page = await browser.newPage();
 
-        // Navigate to main House floor activity page
+        // Navigate to main US House of Representatives floor activity page in Puppeteer browser
         await page.goto('https://live.house.gov/?date=2023-07-27', {
             waitUntil: "networkidle0"
         });
 
-        // Get links for roll call votes
+        // Get hyperlinks for roll call votes from US House of Representatives floor activity table
         const body = await page.evaluate(() => {
-            // Get all data cells from House floor activity table
+            // Get all data cells from US House of Representatives floor activity table
             const activityTableReference = document.querySelectorAll('#activity-table > tbody tr td');
 
-            // Create array of data cells from House floor activity table and iterate through them to extract all hyperlinks
+            // Create array of data cells from US House of Representatives floor activity table and iterate through them to extract all hyperlinks
             const activity = Array.from(activityTableReference).map((item) => {
                 // Get anchor tag from hyperlink in data cell
                 const anchor = item.querySelector('a');
@@ -91,7 +91,7 @@ const scrapeData = async () => {
             return tables;
         });
 
-        // Close browser
+        // Close Puppeteer browser
         await browser.close();
 
         // Return votes array
