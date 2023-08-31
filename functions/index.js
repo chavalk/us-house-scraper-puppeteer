@@ -7,13 +7,19 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
-const logger = require("firebase-functions/logger");
+//const {onRequest} = require("firebase-functions/v2/https");
+//const logger = require("firebase-functions/logger");
+// Import the Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers
 const functions = require("firebase-functions");
+// Import the scraper.js file from the current functions folder
 const scraper = require("./scraper");
+// Import the Firebase Admin SDK to access Firestore
 const admin = require("firebase-admin");
 
+// Initialize Firebase application
 admin.initializeApp();
+
+// Access databse in Firebase
 const db = admin.firestore();
 
 const getToday = () => {
