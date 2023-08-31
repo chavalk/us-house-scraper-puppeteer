@@ -1,4 +1,4 @@
-// Call Puppeteer
+// Import Puppeteer
 const puppeteer = require('puppeteer');
 
 // Build scrapeData function
