@@ -1,7 +1,7 @@
 // Import Puppeteer
 const puppeteer = require('puppeteer');
 
-// Build scrapeData function
+// Build function to scrape roll call votes from US House floor actvity table
 const scrapeData = async () => {
     try {
         // Launch Puppeteer browser

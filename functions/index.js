@@ -22,24 +22,34 @@ admin.initializeApp();
 // Access databse in Firebase
 const db = admin.firestore();
 
+// Build function to get current date
 const getToday = () => {
+    // Get current date
     const today = new Date();
-    console.log(`${today.getDate()}${today.getMonth() + 1}${today.getFullYear()}`);
 
+    // Return date in DD/M/YYYY format
     return `${today.getDate()}${today.getMonth() + 1}${today.getFullYear()}`;
 };
 
+// Build Firebase Cloud function that runs every day at midnight
 exports.pubsub = functions
+    // Define region where function will be deployed
     .region("us-central1")
+    // Allocate how much memory the function needs
     .runWith({ memory: '2GB' })
+    // Schedule function using pubsub feature and chrome expression in Unix Crontab to run every day at midnight
     .pubsub.schedule("0 0 * * *")
+    // Set time zone for function to follow
     .timeZone("America/Chicago")
+    // Set function to run asynchronously
     .onRun(async () => {
         try {
+            // Call scrapeData function from scraper.js
             const scrapeData = await scraper.scrapeData();
-            console.log("Scrape Data:", scrapeData);
+            // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
             return db.collection('activity').doc(getToday()).set(scrapeData);
         } catch (error) {
+            // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
             return null;
         }
