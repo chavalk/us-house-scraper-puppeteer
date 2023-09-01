@@ -27,8 +27,8 @@ const getToday = () => {
     // Get current date
     const today = new Date();
 
-    // Return date in DD/M/YYYY format
-    return `${today.getDate()}${today.getMonth() + 1}${today.getFullYear()}`;
+    // Return date in M/DD/YYYY format
+    return `${today.getMonth() + 1}${today.getDate()}${today.getFullYear()}`;
 };
 
 // Build Firebase Cloud function that runs every day at midnight
