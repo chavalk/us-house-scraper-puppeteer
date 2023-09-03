@@ -45,10 +45,10 @@ const scrapeData = async () => {
             const filteredActivity = activity.filter(value => JSON.stringify(value) !== '{}');
 
             // Filter out any hyperlinks that are not for a roll call
-            const rollCallActivity = filteredActivity.filter(value => value.link.includes('roll'));
+            const rollCallLinks = filteredActivity.filter(value => value.link.includes('roll'));
 
             // Return rollCallActivity array
-            return rollCallActivity;
+            return rollCallLinks;
         });
 
         // Navigate to roll call page of first index in rollCallActivity array
