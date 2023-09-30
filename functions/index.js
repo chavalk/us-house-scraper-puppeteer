@@ -12,7 +12,7 @@
 // Import the Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers
 const functions = require("firebase-functions");
 // Import scraper.js file from current functions folder
-const scraper = require("./scraper");
+const scraper = require("./scraper-us-house-floor-activity");
 // Import scrape-us-house-votes.js from current functions folder
 const scraperUSHouseVotes = require("./scraper-us-house-votes")
 // Import the Firebase Admin SDK to access Firestore
