@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 
 // Build function to scrape activity from the US House floor activity table
-const scrapeData = async () => {
+const scrapeUSHouseFloorActivity = async () => {
     try {
         // Launch Puppeteer browser
         const browser = await puppeteer.launch({
@@ -56,10 +56,10 @@ const scrapeData = async () => {
 }
 
 // Call scrapeData function
-scrapeData()
+scrapeUSHouseFloorActivity()
 // .then((res) => {
 //     console.log(res);
 // });
 
 // Export scrapeData function
-exports.scrapeData = scrapeData;
+exports.scrapeUSHouseFloorActivity = scrapeUSHouseFloorActivity;
