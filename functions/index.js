@@ -57,7 +57,7 @@ exports.pubsub = functions
         }
     })
 
-// Build Firebase Cloud function to scrape votes in the US House of Representatives
+// Build Firebase Cloud function to scrape roll call votes in the US House of Representatives
 exports.scrapeUSHouseVotes = functions
     // Define region where function will be deployed
     .region("us-central1")
