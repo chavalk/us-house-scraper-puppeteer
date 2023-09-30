@@ -14,7 +14,7 @@ const functions = require("firebase-functions");
 // Import scraper.js file from current functions folder
 const scraperUSHouseFloorActivity = require("./scraper-us-house-floor-activity");
 // Import scrape-us-house-votes.js from current functions folder
-const scraperUSHouseVotes = require("./scraper-us-house-roll-call-votes")
+const scraperUSHouseRollCallVotes = require("./scraper-us-house-roll-call-votes")
 // Import the Firebase Admin SDK to access Firestore
 const admin = require("firebase-admin");
 
@@ -58,7 +58,7 @@ exports.scrapeUSHouseFloorActivity = functions
     })
 
 // Build Firebase Cloud function to scrape roll call votes in the US House of Representatives
-exports.scrapeUSHouseVotes = functions
+exports.scrapeUSHouseRollCallVotes = functions
     // Define region where function will be deployed
     .region("us-central1")
     // Allocate how much memory the function needs
@@ -71,9 +71,9 @@ exports.scrapeUSHouseVotes = functions
     .onRun(async () => {
         try {
             // Call scrapeData function from scraper.js
-            const scrapedUSHouseVotes = await scraperUSHouseVotes.scrapeUSHouseRollCallVotes();
+            const scrapedUSHouseRollCallVotes = await scraperUSHouseRollCallVotes.scrapeUSHouseRollCallVotes();
             // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
-            return db.collection('votes').doc().set(scrapedUSHouseVotes);
+            return db.collection('votes').doc().set(scrapedUSHouseRollCallVotes);
         } catch (error) {
             // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
