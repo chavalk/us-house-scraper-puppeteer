@@ -1,7 +1,7 @@
 // Import Puppeteer
 const puppeteer = require('puppeteer');
 
-// Build function to scrape all rows from the US House floor activity table
+// Build function to scrape activity from the US House floor activity table
 const scrapeData = async () => {
     try {
         // Launch Puppeteer browser
