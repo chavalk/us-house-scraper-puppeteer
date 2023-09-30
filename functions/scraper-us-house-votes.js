@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 
 // Build function to scrape roll call votes from US House floor actvity table
-const scrapeData = async () => {
+const scrapeUSHouseVotes = async () => {
     try {
         // Launch Puppeteer browser
         const browser = await puppeteer.launch({
@@ -80,15 +80,22 @@ const scrapeData = async () => {
 
             // Reformat first table to have house members last name separated by a comma
             tables[0].item = tables[0].item.replaceAll('\n', ', ');
+            const yesVotes = tables[0].item.split(', ')
 
             // Reformat second table to have house members last name separated by a comma
             tables[1].item = tables[1].item.replaceAll('\n', ', ');
+            const noVotes = tables[1].item.split(', ')
 
             // Reformat third table to have house members last name separated by a comma
             tables[2].item = tables[2].item.replaceAll('\n', ', ');
+            const notVoting = tables[2].item.split(', ')
 
             // Return correctly formatted tables
-            return tables;
+            return {
+                yesVotes: yesVotes, 
+                noVotes: noVotes,
+                notVoting: notVoting
+            }
         });
 
         // Close Puppeteer browser
@@ -103,10 +110,10 @@ const scrapeData = async () => {
     }
 }
 
-// Call scrapeData function
-scrapeData().then((res) => {
+// Call scrapeUSHouseVotes function
+scrapeUSHouseVotes().then((res) => {
     console.log(res);
 });
 
-// Export scrapeData function
-exports.scrapeData = scrapeData;
+// Export scrapeUSHouseVotes function
+exports.scrapeUSHouseVotes = scrapeUSHouseVotes;
