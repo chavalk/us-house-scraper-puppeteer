@@ -56,9 +56,10 @@ const scrapeData = async () => {
 }
 
 // Call scrapeData function
-scrapeData().then((res) => {
-    console.log(res);
-});
+scrapeData()
+// .then((res) => {
+//     console.log(res);
+// });
 
 // Export scrapeData function
 exports.scrapeData = scrapeData;
