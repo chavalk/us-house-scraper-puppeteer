@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 
 // Build function to scrape roll call votes from US House floor actvity table
-const scrapeUSHouseVotes = async () => {
+const scrapeUSHouseRollCallVotes = async () => {
     try {
         // Launch Puppeteer browser
         const browser = await puppeteer.launch({
@@ -123,10 +123,10 @@ const scrapeUSHouseVotes = async () => {
 }
 
 // Call scrapeUSHouseVotes function
-scrapeUSHouseVotes()
-// .then((res) => {
-//     console.log(res);
-// });
+scrapeUSHouseRollCallVotes()
+.then((res) => {
+    console.log(res);
+});
 
 // Export scrapeUSHouseVotes function
-exports.scrapeUSHouseVotes = scrapeUSHouseVotes;
+exports.scrapeUSHouseRollCallVotes = scrapeUSHouseRollCallVotes;

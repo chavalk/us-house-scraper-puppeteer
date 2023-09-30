@@ -71,7 +71,7 @@ exports.scrapeUSHouseVotes = functions
     .onRun(async () => {
         try {
             // Call scrapeData function from scraper.js
-            const scrapedUSHouseVotes = await scraperUSHouseVotes.scrapeUSHouseVotes();
+            const scrapedUSHouseVotes = await scraperUSHouseVotes.scrapeUSHouseRollCallVotes();
             // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
             return db.collection('votes').doc().set(scrapedUSHouseVotes);
         } catch (error) {
