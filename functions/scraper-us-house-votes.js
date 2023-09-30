@@ -60,6 +60,8 @@ const scrapeUSHouseVotes = async () => {
         const votes = await page.evaluate(() => {
             // Scrape bill from roll call page
             const bill = document.querySelector('body').childNodes[6].textContent
+            // Scrape time from roll call page
+            const time = document.querySelector('body').childNodes[7].textContent
             // Get all tables in roll call page
             const tablesReference = document.querySelectorAll('table');
 
@@ -95,6 +97,7 @@ const scrapeUSHouseVotes = async () => {
             // Return correctly formatted tables
             return {
                 bill: bill,
+                time: time,
                 yesVotes: yesVotes, 
                 noVotes: noVotes,
                 notVoting: notVoting
