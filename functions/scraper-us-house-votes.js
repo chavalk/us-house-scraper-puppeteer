@@ -123,9 +123,10 @@ const scrapeUSHouseVotes = async () => {
 }
 
 // Call scrapeUSHouseVotes function
-scrapeUSHouseVotes().then((res) => {
-    console.log(res);
-});
+scrapeUSHouseVotes()
+// .then((res) => {
+//     console.log(res);
+// });
 
 // Export scrapeUSHouseVotes function
 exports.scrapeUSHouseVotes = scrapeUSHouseVotes;
