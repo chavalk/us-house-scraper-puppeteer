@@ -12,7 +12,7 @@
 // Import the Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers
 const functions = require("firebase-functions");
 // Import scraper.js file from current functions folder
-const scraper = require("./scraper-us-house-floor-activity");
+const scraperUSHouseFloorActivity = require("./scraper-us-house-floor-activity");
 // Import scrape-us-house-votes.js from current functions folder
 const scraperUSHouseVotes = require("./scraper-us-house-votes")
 // Import the Firebase Admin SDK to access Firestore
@@ -34,7 +34,7 @@ const getToday = () => {
 };
 
 // Build Firebase Cloud function to scrape US House of Representatives activity table and store the activity in the Firestore activity collection
-exports.pubsub = functions
+exports.scrapeUSHouseFloorActivity = functions
     // Define region where function will be deployed
     .region("us-central1")
     // Allocate how much memory the function needs
@@ -47,9 +47,9 @@ exports.pubsub = functions
     .onRun(async () => {
         try {
             // Call scrapeData function from scraper.js
-            const scrapeData = await scraper.scrapeData();
+            const scrapedUSHouseFloorActivity = await scraperUSHouseFloorActivity.scrapeUSHouseFloorActivity();
             // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
-            return db.collection('activity').doc(getToday()).set(scrapeData);
+            return db.collection('activity').doc(getToday()).set(scrapedUSHouseFloorActivity);
         } catch (error) {
             // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
