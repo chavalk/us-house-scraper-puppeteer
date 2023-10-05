@@ -64,6 +64,8 @@ const scrapeUSHouseRollCallVotes = async () => {
             const time = document.querySelector('body').childNodes[7].textContent
             // Scrape roll call question from roll call page
             const question = document.querySelector('body').childNodes[11].textContent
+            // Remove spaces from question scraped from roll call page
+            const formattedQuestion = question.replace(/\s+/, '')
             // Scrape bill title from roll call page
             const billTitle = document.querySelector('body').childNodes[15].textContent
             // Get all tables in roll call page
@@ -102,7 +104,7 @@ const scrapeUSHouseRollCallVotes = async () => {
             return {
                 bill: bill,
                 time: time,
-                question: question,
+                question: formattedQuestion,
                 billTitle: billTitle,
                 yesVotes: yesVotes, 
                 noVotes: noVotes,
