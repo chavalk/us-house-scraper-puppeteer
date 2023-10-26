@@ -102,6 +102,7 @@ const scrapeUSHouseRollCallVotes = async () => {
 
             // Return correctly formatted tables
             return {
+                id: '1',
                 bill: bill,
                 time: time,
                 question: formattedQuestion,
