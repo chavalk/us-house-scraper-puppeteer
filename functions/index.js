@@ -63,7 +63,7 @@ exports.scrapeUSHouseRollCallVotes = functions
     .region("us-central1")
     // Allocate how much memory the function needs
     .runWith({ memory: '2GB' })
-    // Schedule function using pubsub feature and chrome expression in Unix Crontab to run every day at midnight
+    // Schedule function using pubsub feature and chrome expression in unix-cron to run every day at midnight
     .pubsub.schedule("0 0 * * *")
     // Set time zone for function to follow
     .timeZone("America/Chicago")
