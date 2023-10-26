@@ -18,7 +18,7 @@ const scrapeUSHouseRollCallVotes = async () => {
         });
 
         // Get hyperlinks for roll call votes from US House of Representatives floor activity table
-        const body = await page.evaluate(() => {
+        const rollCallLinks = await page.evaluate(() => {
             // Get all data cells from US House of Representatives floor activity table
             const activityTableReference = document.querySelectorAll('#activity-table > tbody tr td');
 
@@ -55,11 +55,11 @@ const scrapeUSHouseRollCallVotes = async () => {
         let votes = []
 
         // Check if there are any votes existing. If there are no votes, an empty object is returned. If there are votes, the votes are scraped from the page.
-        if (body.length === 0) {
+        if (rollCallLinks.length === 0) {
             return {}
         } else {
             // Navigate to roll call page of first index in rollCallActivity array
-            await page.goto(body[0].link, {
+            await page.goto(rollCallLinks[0].link, {
                 waitUntil: 'networkidle0'
             });
 
