@@ -13,7 +13,7 @@ const scrapeUSHouseRollCallVotes = async () => {
         const page = await browser.newPage();
 
         // Navigate to main US House of Representatives floor activity page in Puppeteer browser
-        await page.goto('https://live.house.gov/?date=2023-07-27', {
+        await page.goto('https://live.house.gov', {
             waitUntil: "networkidle0"
         });
 
