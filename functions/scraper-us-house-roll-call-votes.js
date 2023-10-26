@@ -65,58 +65,65 @@ const scrapeUSHouseRollCallVotes = async () => {
 
             // Get votes for roll call of first index in rollCallActivity array
             votes = await page.evaluate(() => {
-                // Scrape bill from roll call page
-                const bill = document.querySelector('body').childNodes[6].textContent
-                // Scrape time from roll call page
-                const time = document.querySelector('body').childNodes[7].textContent
-                // Scrape roll call question from roll call page
-                const question = document.querySelector('body').childNodes[11].textContent
-                // Remove spaces from question scraped from roll call page
-                const formattedQuestion = question.replace(/\s+/, '')
-                // Scrape bill title from roll call page
-                const billTitle = document.querySelector('body').childNodes[15].textContent
-                // Get all tables in roll call page
-                const tablesReference = document.querySelectorAll('table');
+                // Scrape h2 to be able to determine if the votes have been posted to the roll call page
+                const voteNotAvailable = document.querySelector('h2');
+                // Check h2 to determine if the roll call page is ready for the votes to be scraped
+                if (voteNotAvailable == null) {
+                    // Scrape bill from roll call page
+                    const bill = document.querySelector('body').childNodes[6].textContent
+                    // Scrape time from roll call page
+                    const time = document.querySelector('body').childNodes[7].textContent
+                    // Scrape roll call question from roll call page
+                    const question = document.querySelector('body').childNodes[11].textContent
+                    // Remove spaces from question scraped from roll call page
+                    const formattedQuestion = question.replace(/\s+/, '')
+                    // Scrape bill title from roll call page
+                    const billTitle = document.querySelector('body').childNodes[15].textContent
+                    // Get all tables in roll call page
+                    const tablesReference = document.querySelectorAll('table');
 
-                // Convert tables reference to array and iterate through them to extract data cells
-                const tables = Array.from(tablesReference).map((item) => {
-                    // Gett all data cells from table
-                    const itemData = item.querySelectorAll('tbody tr td');
+                    // Convert tables reference to array and iterate through them to extract data cells
+                    const tables = Array.from(tablesReference).map((item) => {
+                        // Gett all data cells from table
+                        const itemData = item.querySelectorAll('tbody tr td');
 
-                    // Put data cells in an array
-                    const itemDataArray = Array.from(itemData);
+                        // Put data cells in an array
+                        const itemDataArray = Array.from(itemData);
 
-                    // Concatenate columns into one object and return it. If third row doesn't exist, return empty string
+                        // Concatenate columns into one object and return it. If third row doesn't exist, return empty string
+                        return {
+                            item: itemDataArray[0].innerText + itemDataArray[1].innerText + itemDataArray[2]?.innerText || ''
+                        }
+                    });
+
+                    // Remove first index from tables array since it references total votes table
+                    tables.splice(0, 1);
+
+                    // Reformat first table to have house members last name separated by a comma
+                    tables[0].item = tables[0].item.replaceAll('\n', ', ');
+                    const yesVotes = tables[0].item.split(', ')
+
+                    // Reformat second table to have house members last name separated by a comma
+                    tables[1].item = tables[1].item.replaceAll('\n', ', ');
+                    const noVotes = tables[1].item.split(', ')
+
+                    // Reformat third table to have house members last name separated by a comma
+                    tables[2].item = tables[2].item.replaceAll('\n', ', ');
+                    const notVoting = tables[2].item.split(', ')
+
+                    // Return correctly formatted tables
                     return {
-                        item: itemDataArray[0].innerText + itemDataArray[1].innerText + itemDataArray[2]?.innerText || ''
+                        id: '1',
+                        bill: bill,
+                        time: time,
+                        question: formattedQuestion,
+                        billTitle: billTitle,
+                        yesVotes: yesVotes,
+                        noVotes: noVotes,
+                        notVoting: notVoting
                     }
-                });
-
-                // Remove first index from tables array since it references total votes table
-                tables.splice(0, 1);
-
-                // Reformat first table to have house members last name separated by a comma
-                tables[0].item = tables[0].item.replaceAll('\n', ', ');
-                const yesVotes = tables[0].item.split(', ')
-
-                // Reformat second table to have house members last name separated by a comma
-                tables[1].item = tables[1].item.replaceAll('\n', ', ');
-                const noVotes = tables[1].item.split(', ')
-
-                // Reformat third table to have house members last name separated by a comma
-                tables[2].item = tables[2].item.replaceAll('\n', ', ');
-                const notVoting = tables[2].item.split(', ')
-
-                // Return correctly formatted tables
-                return {
-                    id: '1',
-                    bill: bill,
-                    time: time,
-                    question: formattedQuestion,
-                    billTitle: billTitle,
-                    yesVotes: yesVotes,
-                    noVotes: noVotes,
-                    notVoting: notVoting
+                } else {
+                    return {}
                 }
             });
         }
