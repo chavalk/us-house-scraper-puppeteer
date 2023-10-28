@@ -72,8 +72,11 @@ exports.scrapeUSHouseRollCallVotes = functions
         try {
             // Call scrapeData function from scraper.js
             const scrapedUSHouseRollCallVotes = await scraperUSHouseRollCallVotes.scrapeUSHouseRollCallVotes();
-            // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
-            return db.collection('votes').doc().set(scrapedUSHouseRollCallVotes);
+            for (let i = 0; i < scrapedUSHouseRollCallVotes.length; i++) {
+                // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
+                db.collection('votes').doc().set(scrapedUSHouseRollCallVotes[i]);
+            }
+            return
         } catch (error) {
             // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
