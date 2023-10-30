@@ -71,6 +71,14 @@ const scrapeUSHouseRollCallVotes = async () => {
                     const voteNotAvailable = document.querySelector('h2');
                     // Check h2 to determine if the roll call page is ready for the votes to be scraped
                     if (voteNotAvailable == null) {
+                        // Scrape roll call number title fromm roll call page
+                        const rollCallNumberTitle = document.querySelector('font').textContent;
+                        // Split the roll call numer title by space
+                        const rollCallNumberTitleParts = rollCallNumberTitle.split(' ');
+                        // Extract the roll call number from the array
+                        const rollCallNumberString = rollCallNumberTitleParts[6];
+                        // Convert roll call number from string to integer
+                        const rollCallNumber = parseInt(rollCallNumberString, 10);
                         // Scrape bill from roll call page
                         const bill = document.querySelector('body').childNodes[6].textContent
                         // Scrape time from roll call page
@@ -118,6 +126,7 @@ const scrapeUSHouseRollCallVotes = async () => {
                             id: time,
                             bill: bill,
                             time: time,
+                            rollCallNumber: rollCallNumber,
                             question: formattedQuestion,
                             billTitle: billTitle,
                             yesVotes: yesVotes,
