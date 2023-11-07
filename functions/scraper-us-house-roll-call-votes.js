@@ -17,6 +17,26 @@ const scrapeUSHouseRollCallVotes = async () => {
             waitUntil: "networkidle0"
         });
 
+        // Scrape house session date displayed in floor activity page
+        const houseSessionDate = await page.evaluate(() => {
+            // Scrape text content of class containing date
+            const date = document.querySelector('.display-date').textContent;
+            // Split date into array
+            const dateComponents = date.split(/, | /);
+            // Store month name from array in new variable
+            const monthName = dateComponents[1];
+            // Store day from array in new variable
+            const day = dateComponents[2];
+            // Store year from array in new variable
+            const year = dateComponents[3];
+            // Create array with all months of the year
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            // Convert month name to month number
+            const month = months.indexOf(monthName) + 1;
+            // Return date in MM/DD/YYYY format
+            return month + day + year;
+        });
+
         // Get hyperlinks for roll call votes from US House of Representatives floor activity table
         const rollCallLinks = await page.evaluate(() => {
             // Get all data cells from US House of Representatives floor activity table
@@ -99,10 +119,15 @@ const scrapeUSHouseRollCallVotes = async () => {
 
                             // Put data cells in an array
                             const itemDataArray = Array.from(itemData);
-
-                            // Concatenate columns into one object and return it. If third row doesn't exist, return empty string
+                            // Create empty string to store concatenation from array
+                            let itemDataArrayString = '';
+                            // Concatenate all rep names in a string
+                            for (let i = 0; i < itemDataArray.length; i++) {
+                                itemDataArrayString += itemDataArray[i].innerText;
+                            }
+                            // Return concatenated string
                             return {
-                                item: itemDataArray[0].innerText + itemDataArray[1].innerText + itemDataArray[2]?.innerText || ''
+                                item: itemDataArrayString
                             }
                         });
 
@@ -145,8 +170,8 @@ const scrapeUSHouseRollCallVotes = async () => {
         // Close Puppeteer browser
         await browser.close();
 
-        // Return votes array
-        return votes;
+        // Return votes array and id
+        return { votes, id: houseSessionDate };
     } catch (error) {
         // Catch error and send to console if error is thrown
         console.error('Error occurred during scraping', error);

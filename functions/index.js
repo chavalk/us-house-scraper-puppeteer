@@ -72,15 +72,22 @@ exports.scrapeUSHouseRollCallVotes = functions
         try {
             // Call scrapeData function from scraper.js
             const scrapedUSHouseRollCallVotes = await scraperUSHouseRollCallVotes.scrapeUSHouseRollCallVotes();
-            for (let i = 0; i < scrapedUSHouseRollCallVotes.length; i++) {
-                // Extract roll call number from object in array in order to use it as document id in database
-                var rollCallNumber = scrapedUSHouseRollCallVotes[i].rollCallNumber;
-                // Convert roll call number to string
-                var rollCallNumberString = rollCallNumber.toString();
-                // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
-                db.collection('votes').doc(rollCallNumberString).set(scrapedUSHouseRollCallVotes[i]);
+            // for (let i = 0; i < scrapedUSHouseRollCallVotes.length; i++) {
+            //     // Extract roll call number from object in array in order to use it as document id in database
+            //     var rollCallNumber = scrapedUSHouseRollCallVotes[i].rollCallNumber;
+            //     // Convert roll call number to string
+            //     var rollCallNumberString = rollCallNumber.toString();
+            //     // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
+            //     db.collection('votes').doc(rollCallNumberString).set(scrapedUSHouseRollCallVotes[i]);
+            // }
+            // Check if scrapedUSHouseRollCallVotes is returning an empty object
+            if (JSON.stringify(scrapedUSHouseRollCallVotes) == '{}') {
+                // Return if object is empty
+                return
+            } else {
+                // Make call to database to save votes if object is not empty
+                return db.collection('votes').doc(scrapedUSHouseRollCallVotes.id).set(scrapedUSHouseRollCallVotes);
             }
-            return
         } catch (error) {
             // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
