@@ -34,12 +34,13 @@ const scrapeUSHouseFloorActivity = async () => {
                 return {
                     floorTime: dataCell[0].innerText,
                     floorBill: dataCell[1].innerText,
-                    floorActivity: dataCell[2].innerText
+                    floorActivity: dataCell[2].innerText,
+                    id: dataCell[0].innerText
                 }
             });
     
             // Return activity array inside of object
-            return { activity };
+            return { activity, id: "1" };
         });
     
         // Close Puppeteer browser
@@ -57,9 +58,9 @@ const scrapeUSHouseFloorActivity = async () => {
 
 // Call scrapeData function
 scrapeUSHouseFloorActivity()
-// .then((res) => {
-//     console.log(res);
-// });
+.then((res) => {
+    console.log(res);
+});
 
 // Export scrapeData function
 exports.scrapeUSHouseFloorActivity = scrapeUSHouseFloorActivity;
