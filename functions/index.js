@@ -49,7 +49,7 @@ exports.scrapeUSHouseFloorActivity = functions
             // Call scrapeData function from scraper.js
             const scrapedUSHouseFloorActivity = await scraperUSHouseFloorActivity.scrapeUSHouseFloorActivity();
             // Make call to Firebase to create collection called activity, to create document using current date as the name of the document, and set data in document from scrapeData
-            return db.collection('activity').doc(getToday()).set(scrapedUSHouseFloorActivity);
+            return db.collection('activity').doc(scrapedUSHouseFloorActivity.id).set(scrapedUSHouseFloorActivity);
         } catch (error) {
             // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
