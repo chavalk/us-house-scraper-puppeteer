@@ -39,6 +39,8 @@ const scrapeUSHouseFloorActivity = async () => {
     
         // Get text in table rows from US House of Representatives floor activity table
         const activity = await page.evaluate(() => {
+            // Scrape date displayed at the top of floor activity page
+            const date = document.querySelector('.display-date').textContent;
             // Get all table rows from US House of Representatives floor activity table
             const activityTableReference = document.querySelectorAll('#activity-table > tbody tr');
     
@@ -55,7 +57,7 @@ const scrapeUSHouseFloorActivity = async () => {
                     floorTime: dataCell[0].innerText,
                     floorBill: dataCell[1].innerText,
                     floorActivity: dataCell[2].innerText,
-                    id: dataCell[0].innerText
+                    id: dataCell[0].innerText + ' ' + date
                 }
             });
     
