@@ -40,7 +40,7 @@ exports.scrapeUSHouseFloorActivity = functions
     // Allocate how much memory the function needs
     .runWith({ memory: '2GB' })
     // Schedule function using pubsub feature and chrome expression in Unix Crontab to run every day at midnight
-    .pubsub.schedule("*/5 8-16 * * 3")
+    .pubsub.schedule("*/5 11-16 * * 2,3")
     // Set time zone for function to follow
     .timeZone("America/Chicago")
     // Set function to run asynchronously
