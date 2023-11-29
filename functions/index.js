@@ -14,7 +14,7 @@ const functions = require("firebase-functions");
 // Import scraper.js file from current functions folder
 const scraperUSHouseFloorActivity = require("./scraper-us-house-floor-activity");
 // Import scrape-us-house-votes.js from current functions folder
-const scraperUSHouseRollCallVotes = require("./scraper-us-house-roll-call-votes")
+// const scraperUSHouseRollCallVotes = require("./scraper-us-house-roll-call-votes")
 // Import the Firebase Admin SDK to access Firestore
 const admin = require("firebase-admin");
 
