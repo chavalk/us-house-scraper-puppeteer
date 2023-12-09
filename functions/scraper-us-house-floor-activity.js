@@ -1,18 +1,13 @@
-// Import Puppeteer
 const puppeteer = require('puppeteer');
 
-// Build function to scrape activity from the US House floor activity table
 const scrapeUSHouseFloorActivity = async () => {
     try {
-        // Launch Puppeteer browser
         const browser = await puppeteer.launch({
             headless: "new"
         });
     
-        // Open new page in Puppeteer browser
         const page = await browser.newPage();
     
-        // Navigate to main US House of Representatives floor activity page in Puppeteer browser
         await page.goto('https://live.house.gov', {
             waitUntil: "networkidle0"
         });
