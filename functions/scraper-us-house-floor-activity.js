@@ -49,8 +49,15 @@ const scrapeUSHouseFloorActivity = async () => {
 
                 // Create array from all data cells in each row of US House of Representatives floor activity table
                 const dataCell = Array.from(dataCellReference);
-                const parts = dataCell[0].innerText.split(' ');
-                const time = parts[0];
+                let [time, modifier] = dataCell[0].innerText.split(' ');
+                let [hours, minutes, seconds] = time.split(':');
+                if (hours === '12') {
+                    hours = '00'
+                }
+                if (modifier === 'PM') {
+                    hours = parseInt(hours, 10) + 12;
+                }
+                time = `${hours}:${minutes}:${seconds}`
     
                 // Return text from each of the data cells in object format
                 return {
