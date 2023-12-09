@@ -24,15 +24,6 @@ admin.initializeApp();
 // Access databse in Firebase
 const db = admin.firestore();
 
-// Build function to get current date
-// const getToday = () => {
-//     // Get current date
-//     const today = new Date();
-
-//     // Return date in M/DD/YYYY format
-//     return `${today.getMonth() + 1}${today.getDate()}${today.getFullYear()}`;
-// };
-
 // Build Firebase Cloud function to scrape US House of Representatives activity table and store the activity in the Firestore activity collection
 exports.scrapeUSHouseFloorActivity = functions
     // Define region where function will be deployed
