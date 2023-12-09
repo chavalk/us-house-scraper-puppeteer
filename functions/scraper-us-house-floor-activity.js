@@ -36,6 +36,9 @@ const scrapeUSHouseFloorActivity = async () => {
         const activity = await page.evaluate(() => {
             // Scrape date displayed at the top of floor activity page
             const date = document.querySelector('.display-date').textContent;
+            const parts = date.split(', ');
+            const dateWithoutDayOfWeek = parts[1] + ', ' +parts[2];
+            
             // Get all table rows from US House of Representatives floor activity table
             const activityTableReference = document.querySelectorAll('#activity-table > tbody tr');
     
@@ -46,13 +49,16 @@ const scrapeUSHouseFloorActivity = async () => {
 
                 // Create array from all data cells in each row of US House of Representatives floor activity table
                 const dataCell = Array.from(dataCellReference);
+                const parts = dataCell[0].innerText.split(' ');
+                const time = parts[0];
     
                 // Return text from each of the data cells in object format
                 return {
                     floorTime: dataCell[0].innerText,
                     floorBill: dataCell[1].innerText,
                     floorActivity: dataCell[2].innerText,
-                    id: dataCell[0].innerText + ' ' + date
+                    id: dataCell[0].innerText + ' ' + date,
+                    timestamp: dateWithoutDayOfWeek + ' ' + time
                 }
             });
     
