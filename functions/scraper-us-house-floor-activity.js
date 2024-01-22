@@ -65,7 +65,8 @@ const scrapeUSHouseFloorActivity = async () => {
                     floorBill: dataCell[1].innerText,
                     floorActivity: dataCell[2].innerText,
                     id: dataCell[0].innerText + ' ' + date,
-                    timestamp: dateWithoutDayOfWeek + ' ' + time
+                    timestamp: dateWithoutDayOfWeek + ' ' + time,
+                    date: dateWithoutDayOfWeek
                 }
             });
     
