@@ -15,7 +15,7 @@ const formatTimestamp = (date) => {
 exports.scrapeUSHouseFloorActivity = functions
     .region("us-central1")
     .runWith({ memory: '2GB' })
-    .pubsub.schedule("*/5 8-16 * * 1-5")
+    .pubsub.schedule("*/5 8-20 * * 1-5")
     .timeZone("America/Chicago")
     .onRun(async () => {
         try {
