@@ -15,7 +15,7 @@ const formatTimestamp = (date) => {
 exports.scrapeUSHouseRollCallVotes = functions
     .region("us-central1")
     .runWith({ memory: '2GB' })
-    .pubsub.schedule("*/5 8-20 * * 1-5")
+    .pubsub.schedule("*/30 8-20 * * 1-5") // Run the job every 30 minutes during the hours of 8 AM to 8:59 PM Monday through Friday
     .timeZone("America/Chicago")
     .onRun(async () => {
         try {
