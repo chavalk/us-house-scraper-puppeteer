@@ -31,9 +31,10 @@ exports.scrapeUSHouseRollCallVotes = functions
                 const rollCallNumberExists = await db.collection('rollcall').where('rollCallNumber', '==', scrapedUSHouseRollCallVotes.votesArray[0].rollCallNumber).get();
                 console.log(rollCallNumberExists.size);
                 if (rollCallNumberExists.size == 1) {
-                    console.log('Did not write to database');
+                    console.log('Most recent roll call found in database. Nothing saved to database.');
                     return
                 } else {
+                    console.log('Most recent roll call not found in database. Went into else statement to loop through roll calls and save them to database.');
                     for (i = 0; i < scrapedUSHouseRollCallVotes.votesArray.length; i++) {
                         db.collection('rollcall').doc(scrapedUSHouseRollCallVotes.votesArray[i].id).set(scrapedUSHouseRollCallVotes.votesArray[i]);
 
@@ -51,7 +52,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
-                        console.log('Wrote yes votes');
+                        
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedNo.length; j++) {
                             const vote = {
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
@@ -66,7 +67,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
-                        console.log('Wrote no votes');
+                        
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedPresent.length; j++) {
                             const vote = {
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
@@ -81,7 +82,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
-                        console.log('Wrote present votes');
+                        
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoDidNotVote.length; j++) {
                             const vote = {
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
@@ -96,7 +97,6 @@ exports.scrapeUSHouseRollCallVotes = functions
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
-                        console.log('Wrote did not vote votes');
                     }
                     return
                 }
