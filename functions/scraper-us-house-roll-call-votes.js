@@ -8,7 +8,7 @@ const scrapeUSHouseRollCallVotes = async () => {
 
         const page = await browser.newPage();
 
-        await page.goto('https://live.house.gov/?date=2024-05-17', {
+        await page.goto('https://live.house.gov/', {
             waitUntil: "networkidle0"
         });
 
