@@ -1,0 +1,173 @@
+const puppeteer = require('puppeteer');
+
+const scrapeUSHouseRollCallVotes = async () => {
+    try {
+        const browser = await puppeteer.launch({
+            headless: "new"
+        });
+
+        const page = await browser.newPage();
+
+        await page.goto('https://live.house.gov/?date=2024-05-17', {
+            waitUntil: "networkidle0"
+        });
+
+        const rollCallActivityTableLinks = await page.evaluate(() => {
+            const activityTableCells = document.querySelectorAll('#activity-table > tbody tr td');
+
+            const activityTableLinks = Array.from(activityTableCells).map((link) => {
+                const anchorTag = link.querySelector('a');
+
+                let hrefAttribute;
+
+                if (anchorTag !== null) {
+                    hrefAttribute = anchorTag.getAttribute('href');
+                };
+
+                return {
+                    activityTableLink: hrefAttribute
+                };
+            });
+
+            const filterEmptyActivityTableLinks = activityTableLinks.filter(value => JSON.stringify(value) !== '{}');
+
+            const filterRollCallActivityTableLinks = filterEmptyActivityTableLinks.filter(value => value.activityTableLink.includes('roll'));
+
+            return filterRollCallActivityTableLinks;
+        });
+
+        let votesArray = [];
+
+        if (rollCallActivityTableLinks.length === 0) {
+            return {};
+        } else {
+            for (let i = 0; i < rollCallActivityTableLinks.length; i++) {
+                await page.goto(rollCallActivityTableLinks[i].activityTableLink, {
+                    waitUntil: 'networkidle0'
+                });
+
+                const votes = await page.evaluate(() => {
+                    const checkIfVotesPosted = document.querySelector('h2');
+
+                    if (checkIfVotesPosted == null) {
+                        // Scrape roll call number title from roll call page and reformat it
+                        const rollCallNumberTitle = document.querySelector('font').textContent;
+                        const rollCallNumberTitleParts = rollCallNumberTitle.split(' ');
+                        const rollCallNumberString = rollCallNumberTitleParts[6];
+                        const rollCallNumber = parseInt(rollCallNumberString, 10);
+
+                        const billNumber = document.querySelector('body').childNodes[6].textContent;
+
+                        const time = document.querySelector('body').childNodes[7].textContent;
+                        const datePattern = /(\d+)-(\w+)-(\d{4})/;
+                        const timePattern = /(\d{1,2}):(\d{2})\s*(AM|PM)/;
+                        const dateMatch = time.match(datePattern);
+                        const timeMatch = time.match(timePattern);
+                        const day = dateMatch[1];
+                        const month = dateMatch[2];
+                        const year = dateMatch[3];
+                        let hour = parseInt(timeMatch[1]);
+                        const minute = timeMatch[2];
+                        const period = timeMatch[3];
+                        if (period === 'PM' && hour < 12) {
+                            hour += 12;
+                        }
+                        if (period === 'AM' && hour === 12) {
+                            hour = 0;
+                        }
+                        const hourFormatted = hour.toString().padStart(2, '0');
+                        const monthMap = {
+                            Jan: '01',
+                            Feb: '02',
+                            Mar: '03',
+                            Apr: '04',
+                            May: '05',
+                            Jun: '06',
+                            Jul: '07',
+                            Aug: '08',
+                            Sep: '09',
+                            Oct: '10',
+                            Nov: '11',
+                            Dec: '12'
+                        };
+                        const monthNumber = monthMap[month];
+                        const formattedDate = `${month} ${day}, ${year}`;
+                        const formattedTime = `${hourFormatted}:${minute}:00`;
+                        const timestamp = `${formattedDate} ${formattedTime}`;
+
+                        // Scrape roll call question from roll call page and reformat it to remove spaces from question
+                        const question = document.querySelector('body').childNodes[11].textContent;
+                        const formattedQuestion = question.replace(/\s+/, '');
+
+                        const billTitle = document.querySelector('body').childNodes[15].textContent;
+                        const voteTables = document.querySelectorAll('table');
+
+                        const voteTablesArray = Array.from(voteTables).map((table) => {
+                            const voteTablesCells = table.querySelectorAll('tbody tr td');
+                            const voteTablesCellsArray = Array.from(voteTablesCells);
+
+                            let voteTablesCellsString = '';
+                            for (let i = 0; i < voteTablesCellsArray.length; i++) {
+                                voteTablesCellsString += voteTablesCellsArray[i].innerText;
+                            }
+
+                            return voteTablesCellsString;
+                        });
+
+                        voteTablesArray.splice(0, 1);
+
+                        voteTablesArray[0] = voteTablesArray[0].replaceAll('\n', ', ');
+                        const repsWhoVotedYesArray = voteTablesArray[0].split(', ');
+
+                        voteTablesArray[1] = voteTablesArray[1].replaceAll('\n', ', ');
+                        const repsWhoVotedNoArray = voteTablesArray[1].split(', ');
+
+                        voteTablesArray[2] = voteTablesArray[2].replaceAll('\n', ', ');
+
+                        let repsWhoVotedPresentArray = [];
+                        let repsWhoDidNotVoteArray = [];
+
+                        if (voteTablesArray.length == 4) {
+                            repsWhoVotedPresentArray = voteTablesArray[2].split(', ');
+                            voteTablesArray[3] = voteTablesArray[3].replaceAll('\n', ', ');
+                            repsWhoDidNotVoteArray = voteTablesArray[3].split(', ');
+                        } else {
+                            repsWhoDidNotVoteArray = voteTablesArray[2].split(', ');
+                        }
+
+                        return {
+                            id: timestamp,
+                            billNumber: billNumber,
+                            timestamp: timestamp,
+                            rollCallNumber: rollCallNumber,
+                            question: formattedQuestion,
+                            billTitle: billTitle,
+                            repsWhoVotedYes: repsWhoVotedYesArray,
+                            repsWhoVotedNo: repsWhoVotedNoArray,
+                            repsWhoVotedPresent: repsWhoVotedPresentArray,
+                            repsWhoDidNotVote: repsWhoDidNotVoteArray
+                        }
+                    } else {
+                        return {}
+                    }
+                });
+
+                votesArray.push(votes);
+            }
+        }
+
+        await browser.close()
+
+        return { votesArray }
+    } catch (error) {
+        console.error('Error occurred during scraping', error);
+        return null;
+    }
+}
+
+scrapeUSHouseRollCallVotes()
+.then((res) => {
+    console.log(res);
+});
+
+exports.scrapeUSHouseRollCallVotes = scrapeUSHouseRollCallVotes;
