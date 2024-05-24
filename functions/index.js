@@ -6,6 +6,7 @@ const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/
 admin.initializeApp();
 
 const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
 
 const formatTimestamp = (date) => {
     const currentDate = new Date(date);
