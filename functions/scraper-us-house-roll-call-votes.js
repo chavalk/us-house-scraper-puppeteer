@@ -61,6 +61,12 @@ const scrapeUSHouseRollCallVotes = async () => {
                         const parts = bill.split(' ');
                         const reformattedBill = `${parts[0]}.${parts[1]}. ${parts.slice(2).join(' ')}`;
 
+                        // Create bill URL by extracting the bill number from the bill
+                        const regex = /\d+/;
+                        const match = bill.match(regex);
+                        const billNumber = parseInt(match[0], 10);
+                        const billURL = `https://www.congress.gov/bill/118th-congress/house-bill/${billNumber}`;
+
                         // Scrape roll call date and time and reformat it to comply to Firestore timestamp format
                         const dataAndTime = document.querySelector('body').childNodes[7].textContent;
                         const datePattern = /(\d+)-(\w+)-(\d{4})/;
@@ -146,6 +152,7 @@ const scrapeUSHouseRollCallVotes = async () => {
                             rollCallNumber: rollCallNumber,
                             question: formattedQuestion,
                             billTitle: billTitle,
+                            billURL: billURL,
                             repsWhoVotedYes: repsWhoVotedYesArray,
                             repsWhoVotedNo: repsWhoVotedNoArray,
                             repsWhoVotedPresent: repsWhoVotedPresentArray,
