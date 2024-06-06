@@ -20,7 +20,6 @@ exports.scrapeUSHouseRollCallVotes = functions
     .timeZone("America/Chicago")
     .onRun(async () => {
         try {
-            // Call scrapeData function from scraper.js
             const scrapedUSHouseRollCallVotes = await scraperUSHouseRollCallVotes.scrapeUSHouseRollCallVotes();
             
             // Check if scrapedUSHouseRollCallVotes is returning an empty object
