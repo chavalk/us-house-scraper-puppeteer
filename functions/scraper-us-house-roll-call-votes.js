@@ -109,7 +109,10 @@ const scrapeUSHouseRollCallVotes = async () => {
                         const question = document.querySelector('body').childNodes[11].textContent;
                         const formattedQuestion = question.replace(/\s+/, '');
 
+                        // Scrape bill title and format it to remove space at beginning of string
                         const billTitle = document.querySelector('body').childNodes[15].textContent;
+                        const formattedBillTitle = billTitle.trimStart();
+
                         const voteTables = document.querySelectorAll('table');
 
                         const voteTablesArray = Array.from(voteTables).map((table) => {
@@ -151,7 +154,7 @@ const scrapeUSHouseRollCallVotes = async () => {
                             timestamp: timestamp,
                             rollCallNumber: rollCallNumber,
                             question: formattedQuestion,
-                            billTitle: billTitle,
+                            billTitle: formattedBillTitle,
                             billURL: billURL,
                             repsWhoVotedYes: repsWhoVotedYesArray,
                             repsWhoVotedNo: repsWhoVotedNoArray,
