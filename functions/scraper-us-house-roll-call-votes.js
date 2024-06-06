@@ -57,9 +57,9 @@ const scrapeUSHouseRollCallVotes = async () => {
                         const rollCallNumber = parseInt(rollCallNumberString, 10);
 
                         // Scrape roll call bill number and reformat it for better readability by users
-                        const billNumber = document.querySelector('body').childNodes[6].textContent;
-                        const parts = billNumber.split(' ');
-                        const reformattedBillNumber = `${parts[0]}.${parts[1]}. ${parts.slice(2).join(' ')}`;
+                        const bill = document.querySelector('body').childNodes[6].textContent;
+                        const parts = bill.split(' ');
+                        const reformattedBill = `${parts[0]}.${parts[1]}. ${parts.slice(2).join(' ')}`;
 
                         // Scrape roll call date and time and reformat it to comply to Firestore timestamp format
                         const dataAndTime = document.querySelector('body').childNodes[7].textContent;
@@ -141,7 +141,7 @@ const scrapeUSHouseRollCallVotes = async () => {
 
                         return {
                             id: timestamp,
-                            billNumber: reformattedBillNumber,
+                            bill: reformattedBill,
                             timestamp: timestamp,
                             rollCallNumber: rollCallNumber,
                             question: formattedQuestion,
