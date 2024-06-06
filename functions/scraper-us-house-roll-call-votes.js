@@ -58,11 +58,12 @@ const scrapeUSHouseRollCallVotes = async () => {
 
                         const billNumber = document.querySelector('body').childNodes[6].textContent;
 
-                        const time = document.querySelector('body').childNodes[7].textContent;
+                        // Scrape roll call date and time and reformat it to comply to Firestore timestamp format
+                        const dataAndTime = document.querySelector('body').childNodes[7].textContent;
                         const datePattern = /(\d+)-(\w+)-(\d{4})/;
                         const timePattern = /(\d{1,2}):(\d{2})\s*(AM|PM)/;
-                        const dateMatch = time.match(datePattern);
-                        const timeMatch = time.match(timePattern);
+                        const dateMatch = dataAndTime.match(datePattern);
+                        const timeMatch = dataAndTime.match(timePattern);
                         const day = dateMatch[1];
                         const month = dateMatch[2];
                         const year = dateMatch[3];
