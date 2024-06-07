@@ -49,14 +49,13 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Yes'
                             }
-                            const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
                         
@@ -66,14 +65,13 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'No'
                             }
-                            const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
                         
@@ -83,14 +81,13 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Present'
                             }
-                            const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
                         
@@ -100,14 +97,13 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Did Not Vote'
                             }
-                            const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
                             db.collection('votes').doc(id).set(vote);
                         }
                     }
