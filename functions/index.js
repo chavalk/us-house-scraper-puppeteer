@@ -20,6 +20,7 @@ exports.scrapeUSHouseRollCallVotes = functions
     .timeZone("America/Chicago")
     .onRun(async () => {
         try {
+            // Call scraper
             const scrapedUSHouseRollCallVotes = await scraperUSHouseRollCallVotes.scrapeUSHouseRollCallVotes();
             
             // Check if scrapedUSHouseRollCallVotes is returning an empty object
@@ -28,16 +29,21 @@ exports.scrapeUSHouseRollCallVotes = functions
                 console.log('No roll calls scraped. Object is empty. Nothing saved to database.');
                 return
             } else {
+                // Fetch latest roll call number from Firestore to see if it already exists in database
                 const rollCallNumberExists = await db.collection('rollcall').where('rollCallNumber', '==', scrapedUSHouseRollCallVotes.votesArray[0].rollCallNumber).get();
                 console.log(rollCallNumberExists.size);
+                // If roll call number is found in database, function execution is terminated 
                 if (rollCallNumberExists.size == 1) {
                     console.log('Most recent roll call found in database. Nothing saved to database.');
                     return
                 } else {
                     console.log('Most recent roll call not found in database. Went into else statement to loop through roll calls and save them to database.');
+                    // Iterate through roll call votes
                     for (i = 0; i < scrapedUSHouseRollCallVotes.votesArray.length; i++) {
+                        // Save roll call votes to roll call collection in Firestore
                         db.collection('rollcall').doc(scrapedUSHouseRollCallVotes.votesArray[i].id).set(scrapedUSHouseRollCallVotes.votesArray[i]);
 
+                        // Iterate through yes votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes.length; j++) {
                             const vote = {
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
@@ -54,6 +60,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             db.collection('votes').doc(id).set(vote);
                         }
                         
+                        // Iterate through no votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedNo.length; j++) {
                             const vote = {
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
@@ -70,6 +77,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             db.collection('votes').doc(id).set(vote);
                         }
                         
+                        // Iterate through present votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedPresent.length; j++) {
                             const vote = {
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
@@ -86,6 +94,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             db.collection('votes').doc(id).set(vote);
                         }
                         
+                        // Iterate through did not vote votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoDidNotVote.length; j++) {
                             const vote = {
                                 bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
@@ -106,7 +115,6 @@ exports.scrapeUSHouseRollCallVotes = functions
                 }
             }
         } catch (error) {
-            // Console log error in case execution fails
             console.log('Error ocurred during function execution:', error);
             return null;
         }
