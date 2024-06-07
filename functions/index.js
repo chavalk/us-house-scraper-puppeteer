@@ -40,13 +40,14 @@ exports.scrapeUSHouseRollCallVotes = functions
 
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes.length; j++) {
                             const vote = {
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
-                                billNumber: scrapedUSHouseRollCallVotes.votesArray[i].billNumber,
-                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
-                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
-                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
+                                bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
+                                billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
+                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Yes'
                             }
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
@@ -55,13 +56,14 @@ exports.scrapeUSHouseRollCallVotes = functions
                         
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedNo.length; j++) {
                             const vote = {
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
-                                billNumber: scrapedUSHouseRollCallVotes.votesArray[i].billNumber,
-                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
-                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
-                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
+                                bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
+                                billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
+                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'No'
                             }
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
@@ -70,13 +72,14 @@ exports.scrapeUSHouseRollCallVotes = functions
                         
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedPresent.length; j++) {
                             const vote = {
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
-                                billNumber: scrapedUSHouseRollCallVotes.votesArray[i].billNumber,
-                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
-                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
-                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
+                                bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
+                                billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
+                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Present'
                             }
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
@@ -85,13 +88,14 @@ exports.scrapeUSHouseRollCallVotes = functions
                         
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoDidNotVote.length; j++) {
                             const vote = {
-                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
-                                billNumber: scrapedUSHouseRollCallVotes.votesArray[i].billNumber,
-                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
-                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
-                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
+                                bill: scrapedUSHouseRollCallVotes.votesArray[i].bill,
                                 billTitle: scrapedUSHouseRollCallVotes.votesArray[i].billTitle,
+                                billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
+                                id: scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                question: scrapedUSHouseRollCallVotes.votesArray[i].question,
                                 repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
+                                timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Did Not Vote'
                             }
                             const id = scrapedUSHouseRollCallVotes.votesArray[i].id + ' ' + scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j];
