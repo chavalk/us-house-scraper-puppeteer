@@ -149,17 +149,17 @@ const scrapeUSHouseRollCallVotes = async () => {
                         }
 
                         return {
-                            id: timestamp,
                             bill: reformattedBill,
-                            timestamp: timestamp,
-                            rollCallNumber: rollCallNumber,
-                            question: formattedQuestion,
                             billTitle: formattedBillTitle,
                             billURL: billURL,
+                            id: timestamp,
+                            question: formattedQuestion,
                             repsWhoVotedYes: repsWhoVotedYesArray,
                             repsWhoVotedNo: repsWhoVotedNoArray,
                             repsWhoVotedPresent: repsWhoVotedPresentArray,
-                            repsWhoDidNotVote: repsWhoDidNotVoteArray
+                            repsWhoDidNotVote: repsWhoDidNotVoteArray,
+                            rollCallNumber: rollCallNumber,
+                            timestamp: timestamp
                         }
                     } else {
                         return {}
