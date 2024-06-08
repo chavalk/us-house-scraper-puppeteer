@@ -56,7 +56,10 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Yes'
                             }
-                            db.collection('votes').doc(id).set(vote);
+                            if (vote.repLastName === undefined) {
+                                continue;
+                            }
+                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through no votes to save in each representatives votes collection
@@ -67,12 +70,15 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
-                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedNo[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'No'
                             }
-                            db.collection('votes').doc(id).set(vote);
+                            if (vote.repLastName === undefined) {
+                                continue;
+                            }
+                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through present votes to save in each representatives votes collection
@@ -83,12 +89,15 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
-                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedPresent[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Present'
                             }
-                            db.collection('votes').doc(id).set(vote);
+                            if (vote.repLastName === undefined) {
+                                continue;
+                            }
+                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through did not vote votes to save in each representatives votes collection
@@ -99,12 +108,15 @@ exports.scrapeUSHouseRollCallVotes = functions
                                 billURL: scrapedUSHouseRollCallVotes.votesArray[i].billURL,
                                 id: scrapedUSHouseRollCallVotes.votesArray[i].id,
                                 question: scrapedUSHouseRollCallVotes.votesArray[i].question,
-                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes[j],
+                                repLastName: scrapedUSHouseRollCallVotes.votesArray[i].repsWhoDidNotVote[j],
                                 rollCallNumber: scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber,
                                 timestamp: formatTimestamp(scrapedUSHouseRollCallVotes.votesArray[i].timestamp),
                                 vote: 'Did Not Vote'
                             }
-                            db.collection('votes').doc(id).set(vote);
+                            if (vote.repLastName === undefined) {
+                                continue;
+                            }
+                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                     }
                     return

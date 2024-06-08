@@ -131,21 +131,28 @@ const scrapeUSHouseRollCallVotes = async () => {
 
                         voteTablesArray[0] = voteTablesArray[0].replaceAll('\n', ', ');
                         const repsWhoVotedYesArray = voteTablesArray[0].split(', ');
+                        const filteredRepsWhoVotedYesArray = repsWhoVotedYesArray.filter(value => value !== '');
 
                         voteTablesArray[1] = voteTablesArray[1].replaceAll('\n', ', ');
                         const repsWhoVotedNoArray = voteTablesArray[1].split(', ');
+                        const filteredRepsWhoVotedNoArray = repsWhoVotedNoArray.filter(value => value !== '');
 
                         voteTablesArray[2] = voteTablesArray[2].replaceAll('\n', ', ');
 
                         let repsWhoVotedPresentArray = [];
                         let repsWhoDidNotVoteArray = [];
+                        let filteredRepsWhoVotedPresentArray = [];
+                        let filteredRepsWhoDidNotVoteArray = [];
 
                         if (voteTablesArray.length == 4) {
                             repsWhoVotedPresentArray = voteTablesArray[2].split(', ');
+                            filteredRepsWhoVotedPresentArray = repsWhoVotedPresentArray.filter(value => value !== '');
                             voteTablesArray[3] = voteTablesArray[3].replaceAll('\n', ', ');
                             repsWhoDidNotVoteArray = voteTablesArray[3].split(', ');
+                            filteredRepsWhoDidNotVoteArray = repsWhoDidNotVoteArray.filter(value => value !== '');
                         } else {
                             repsWhoDidNotVoteArray = voteTablesArray[2].split(', ');
+                            filteredRepsWhoDidNotVoteArray = repsWhoDidNotVoteArray.filter(value => value !== '');
                         }
 
                         return {
@@ -154,10 +161,10 @@ const scrapeUSHouseRollCallVotes = async () => {
                             billURL: billURL,
                             id: timestamp,
                             question: formattedQuestion,
-                            repsWhoVotedYes: repsWhoVotedYesArray,
-                            repsWhoVotedNo: repsWhoVotedNoArray,
-                            repsWhoVotedPresent: repsWhoVotedPresentArray,
-                            repsWhoDidNotVote: repsWhoDidNotVoteArray,
+                            repsWhoVotedYes: filteredRepsWhoVotedYesArray,
+                            repsWhoVotedNo: filteredRepsWhoVotedNoArray,
+                            repsWhoVotedPresent: filteredRepsWhoVotedPresentArray,
+                            repsWhoDidNotVote: filteredRepsWhoDidNotVoteArray,
                             rollCallNumber: rollCallNumber,
                             timestamp: timestamp
                         }
