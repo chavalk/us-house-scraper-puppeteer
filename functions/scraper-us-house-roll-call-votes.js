@@ -132,10 +132,36 @@ const scrapeUSHouseRollCallVotes = async () => {
                         voteTablesArray[0] = voteTablesArray[0].replaceAll('\n', ', ');
                         const repsWhoVotedYesArray = voteTablesArray[0].split(', ');
                         const filteredRepsWhoVotedYesArray = repsWhoVotedYesArray.filter(value => value !== '');
+                        for (i = 0; i < filteredRepsWhoVotedYesArray.length; i++) {
+                            if (filteredRepsWhoVotedYesArray[i] == 'Garcia' || 
+                                filteredRepsWhoVotedYesArray[i] == 'Gonzalez' || 
+                                filteredRepsWhoVotedYesArray[i] == 'Gonzales' || 
+                                filteredRepsWhoVotedYesArray[i] == 'Scott' || 
+                                filteredRepsWhoVotedYesArray[i] == 'Franklin' || 
+                                filteredRepsWhoVotedYesArray[i] == 'Green' ||
+                                filteredRepsWhoVotedYesArray[i] == 'Frankel'
+                            ) {
+                                filteredRepsWhoVotedYesArray[i] = filteredRepsWhoVotedYesArray[i] + ', ' + filteredRepsWhoVotedYesArray[i + 1];
+                                filteredRepsWhoVotedYesArray.splice(i + 1, 1);
+                            }
+                        }
 
                         voteTablesArray[1] = voteTablesArray[1].replaceAll('\n', ', ');
                         const repsWhoVotedNoArray = voteTablesArray[1].split(', ');
                         const filteredRepsWhoVotedNoArray = repsWhoVotedNoArray.filter(value => value !== '');
+                        for (i = 0; i < filteredRepsWhoVotedNoArray.length; i++) {
+                            if (filteredRepsWhoVotedNoArray[i] == 'Garcia' || 
+                                filteredRepsWhoVotedNoArray[i] == 'Gonzalez' || 
+                                filteredRepsWhoVotedNoArray[i] == 'Gonzales' || 
+                                filteredRepsWhoVotedNoArray[i] == 'Scott' || 
+                                filteredRepsWhoVotedNoArray[i] == 'Franklin' || 
+                                filteredRepsWhoVotedNoArray[i] == 'Green' ||
+                                filteredRepsWhoVotedNoArray[i] == 'Frankel'
+                            ) {
+                                filteredRepsWhoVotedNoArray[i] = filteredRepsWhoVotedNoArray[i] + ', ' + filteredRepsWhoVotedNoArray[i + 1];
+                                filteredRepsWhoVotedNoArray.splice(i + 1, 1);
+                            }
+                        }
 
                         voteTablesArray[2] = voteTablesArray[2].replaceAll('\n', ', ');
 
@@ -147,12 +173,51 @@ const scrapeUSHouseRollCallVotes = async () => {
                         if (voteTablesArray.length == 4) {
                             repsWhoVotedPresentArray = voteTablesArray[2].split(', ');
                             filteredRepsWhoVotedPresentArray = repsWhoVotedPresentArray.filter(value => value !== '');
+                            for (i = 0; i < filteredRepsWhoVotedPresentArray.length; i++) {
+                                if (filteredRepsWhoVotedPresentArray[i] == 'Garcia' || 
+                                    filteredRepsWhoVotedPresentArray[i] == 'Gonzalez' || 
+                                    filteredRepsWhoVotedPresentArray[i] == 'Gonzales' || 
+                                    filteredRepsWhoVotedPresentArray[i] == 'Scott' || 
+                                    filteredRepsWhoVotedPresentArray[i] == 'Franklin' || 
+                                    filteredRepsWhoVotedPresentArray[i] == 'Green' ||
+                                    filteredRepsWhoVotedPresentArray[i] == 'Frankel'
+                                ) {
+                                    filteredRepsWhoVotedPresentArray[i] = filteredRepsWhoVotedPresentArray[i] + ', ' + filteredRepsWhoVotedPresentArray[i + 1];
+                                    filteredRepsWhoVotedPresentArray.splice(i + 1, 1);
+                                }
+                            }
                             voteTablesArray[3] = voteTablesArray[3].replaceAll('\n', ', ');
                             repsWhoDidNotVoteArray = voteTablesArray[3].split(', ');
                             filteredRepsWhoDidNotVoteArray = repsWhoDidNotVoteArray.filter(value => value !== '');
+                            for (i = 0; i < filteredRepsWhoDidNotVoteArray.length; i++) {
+                                if (filteredRepsWhoDidNotVoteArray[i] == 'Garcia' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Gonzalez' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Gonzales' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Scott' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Franklin' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Green' ||
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Frankel'
+                                ) {
+                                    filteredRepsWhoDidNotVoteArray[i] = filteredRepsWhoDidNotVoteArray[i] + ', ' + filteredRepsWhoDidNotVoteArray[i + 1];
+                                    filteredRepsWhoDidNotVoteArray.splice(i + 1, 1);
+                                }
+                            }
                         } else {
                             repsWhoDidNotVoteArray = voteTablesArray[2].split(', ');
                             filteredRepsWhoDidNotVoteArray = repsWhoDidNotVoteArray.filter(value => value !== '');
+                            for (i = 0; i < filteredRepsWhoDidNotVoteArray.length; i++) {
+                                if (filteredRepsWhoDidNotVoteArray[i] == 'Garcia' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Gonzalez' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Gonzales' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Scott' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Franklin' || 
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Green' ||
+                                    filteredRepsWhoDidNotVoteArray[i] == 'Frankel'
+                                ) {
+                                    filteredRepsWhoDidNotVoteArray[i] = filteredRepsWhoDidNotVoteArray[i] + ', ' + filteredRepsWhoDidNotVoteArray[i + 1];
+                                    filteredRepsWhoDidNotVoteArray.splice(i + 1, 1);
+                                }
+                            }
                         }
 
                         return {
