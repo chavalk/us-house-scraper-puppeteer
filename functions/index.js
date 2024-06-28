@@ -42,7 +42,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                     for (i = 0; i < scrapedUSHouseRollCallVotes.votesArray.length; i++) {
                         // Save roll call votes to roll call collection in Firestore
                         db.collection('rollcall').doc(scrapedUSHouseRollCallVotes.votesArray[i].id).set(scrapedUSHouseRollCallVotes.votesArray[i]);
-
+                        console.log('Went into parent for loop to save roll call: ' + scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber);
                         // Iterate through yes votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes.length; j++) {
                             const vote = {
