@@ -39,6 +39,7 @@ const scrapeUSHouseRollCallVotes = async () => {
         let votesArray = [];
 
         if (rollCallActivityTableLinks.length === 0) {
+            // If there are no roll call links posted return an empty object
             return {};
         } else {
             for (let i = 0; i < rollCallActivityTableLinks.length; i++) {
@@ -234,6 +235,7 @@ const scrapeUSHouseRollCallVotes = async () => {
                             timestamp: timestamp
                         }
                     } else {
+                        // if the roll call link is posted but the votes are not posted, return an empty object
                         return {}
                     }
                 });
