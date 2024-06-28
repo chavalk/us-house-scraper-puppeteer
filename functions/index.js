@@ -41,7 +41,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                     // Iterate through roll call votes
                     for (i = 0; i < scrapedUSHouseRollCallVotes.votesArray.length; i++) {
                         // Save roll call votes to roll call collection in Firestore
-                        db.collection('rollcall').doc(scrapedUSHouseRollCallVotes.votesArray[i].id).set(scrapedUSHouseRollCallVotes.votesArray[i]);
+                        await db.collection('rollcall').doc(scrapedUSHouseRollCallVotes.votesArray[i].id).set(scrapedUSHouseRollCallVotes.votesArray[i]);
                         console.log('Went into parent for loop to save roll call: ' + scrapedUSHouseRollCallVotes.votesArray[i].rollCallNumber);
                         // Iterate through yes votes to save in each representatives votes collection
                         for (j = 0; j < scrapedUSHouseRollCallVotes.votesArray[i].repsWhoVotedYes.length; j++) {
@@ -59,7 +59,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             if (vote.repLastName === undefined) {
                                 continue;
                             }
-                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
+                            await db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through no votes to save in each representatives votes collection
@@ -78,7 +78,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             if (vote.repLastName === undefined) {
                                 continue;
                             }
-                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
+                            await db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through present votes to save in each representatives votes collection
@@ -97,7 +97,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             if (vote.repLastName === undefined) {
                                 continue;
                             }
-                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
+                            await db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                         
                         // Iterate through did not vote votes to save in each representatives votes collection
@@ -116,7 +116,7 @@ exports.scrapeUSHouseRollCallVotes = functions
                             if (vote.repLastName === undefined) {
                                 continue;
                             }
-                            db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
+                            await db.collection('representatives').doc(vote.repLastName).collection('votes').doc(vote.id).set(vote);
                         }
                     }
                     return
