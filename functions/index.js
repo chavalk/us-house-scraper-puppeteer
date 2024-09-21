@@ -1,4 +1,4 @@
-const functions = require("firebase-functions");
+const functions = require("firebase-functions/v1");
 const scraperUSHouseRollCallVotes = require("./scraper-us-house-roll-call-votes");
 const admin = require("firebase-admin");
 const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
