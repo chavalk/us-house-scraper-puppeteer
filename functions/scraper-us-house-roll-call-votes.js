@@ -114,8 +114,10 @@ const scrapeUSHouseRollCallVotes = async () => {
                         const billTitle = document.querySelector('body').childNodes[15].textContent;
                         const formattedBillTitle = billTitle.trimStart();
 
+                        // Scrape all tables in roll call page
                         const voteTables = document.querySelectorAll('table');
 
+                        // Extract all cells from each table in roll call page, put the cells in an array, and grab the inner text of each cell to store it in a string
                         const voteTablesArray = Array.from(voteTables).map((table) => {
                             const voteTablesCells = table.querySelectorAll('tbody tr td');
                             const voteTablesCellsArray = Array.from(voteTablesCells);
@@ -128,8 +130,10 @@ const scrapeUSHouseRollCallVotes = async () => {
                             return voteTablesCellsString;
                         });
 
+                        // Remove the first table in the array as it only has the total number of votes and it's not needed
                         voteTablesArray.splice(0, 1);
 
+                        // Reformat the first table in the array which is the table for yes votes
                         voteTablesArray[0] = voteTablesArray[0].replaceAll('\n', ', ');
                         const repsWhoVotedYesArray = voteTablesArray[0].split(', ');
                         const filteredRepsWhoVotedYesArray = repsWhoVotedYesArray.filter(value => value !== '');
@@ -147,6 +151,7 @@ const scrapeUSHouseRollCallVotes = async () => {
                             }
                         }
 
+                        // Reformat the second table in the array which is the table for no votes
                         voteTablesArray[1] = voteTablesArray[1].replaceAll('\n', ', ');
                         const repsWhoVotedNoArray = voteTablesArray[1].split(', ');
                         const filteredRepsWhoVotedNoArray = repsWhoVotedNoArray.filter(value => value !== '');
@@ -164,13 +169,12 @@ const scrapeUSHouseRollCallVotes = async () => {
                             }
                         }
 
+                        // Determine if a table for voted present and not voting exists, and reformat them accordingly
                         voteTablesArray[2] = voteTablesArray[2].replaceAll('\n', ', ');
-
                         let repsWhoVotedPresentArray = [];
                         let repsWhoDidNotVoteArray = [];
                         let filteredRepsWhoVotedPresentArray = [];
                         let filteredRepsWhoDidNotVoteArray = [];
-
                         if (voteTablesArray.length == 4) {
                             repsWhoVotedPresentArray = voteTablesArray[2].split(', ');
                             filteredRepsWhoVotedPresentArray = repsWhoVotedPresentArray.filter(value => value !== '');
